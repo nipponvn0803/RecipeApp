@@ -1,61 +1,158 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Item, Input, Footer, FooterTab, Button as BaseButton, Text as BaseText, Icon } from 'native-base';
+import { Button as BaseButton, Body as BaseBody, Card as BaseCard, CardItem as BaseCardItem, Container, Content, DeckSwiper as BaseDeckSwiper, Footer, FooterTab, Header, Icon, Item, Input, Left as BaseLeft, Text as BaseText, Thumbnail as BaseThumbnail, View as BaseView } from 'native-base';
 import { Font, AppLoading } from "expo";
 import { AppRegistry, View, Text, Button, Image, StyleSheet, StatusBar } from "react-native";
-import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
+import { createAppContainer, createStackNavigator, StackActions, NavigationActions, createBottomTabNavigator } from 'react-navigation';
+import {Ionicons as FirstIonicon} from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
-  canvas: {
+  coverPhoto: {
     flex: 1,
     width: null,
     height: null,
   },
 });
 
+//Cards in DeckSwiper, Homescreen
+const cards = [
+  {
+    text: 'Card One',
+    name: 'One',
+    image: require('./img/cover.png'),
+  },
+
+  {
+    text: 'Card One',
+    name: 'One',
+    image: require('./img/test1.png'),
+  },
+
+  {
+    text: 'Card One',
+    name: 'One',
+    image: require('./img/test2.jpg'),
+  },
+];
+
+// HomeScreen
 class HomeScreen extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
-        <Button
-          title="Go to Details"
-          onPress={() => {
-            this.props.navigation.dispatch(StackActions.reset({
-              index: 0,
-              actions: [
-                NavigationActions.navigate({ routeName: 'Details' })
-              ],
-            }))
-          }}
-        />
-      </View>
+      <Container>
+        {/* hide status bar */}
+        <StatusBar hidden />
+        <Header style={{ backgroundColor: '#3B8686' }} searchBar rounded>
+          <Item>
+            <Icon ios='ios-search' android="md-search" />
+            <Input placeholder="Search" />
+          </Item>
+          <BaseButton transparent>
+            <BaseText>Search</BaseText>
+          </BaseButton>
+        </Header>
+
+        {/* min height make content appear */}
+        <Content contentContainerStyle={{ height: 600 }}>
+          <Image
+            resizeMode="contain"
+            source={require('./img/cover.png')}
+            style={styles.coverPhoto} >
+          </Image>
+          
+          <View style={{height:400, flex: 0.8}}>
+            <BaseDeckSwiper
+              dataSource={cards}
+              renderItem={item =>
+                <BaseCard style={{ elevation: 3 }}>
+                  <BaseCardItem>
+                    <BaseLeft>
+                      <BaseBody>
+                        <BaseText>{item.text}</BaseText>
+                        <BaseText note>NativeBase</BaseText>
+                      </BaseBody>
+                    </BaseLeft>
+                  </BaseCardItem>
+                  <BaseCardItem cardBody>
+                    <Image style={{ height: 150, flex: 0.8 }} source={item.image} />
+                  </BaseCardItem>
+                  <BaseCardItem>
+                    <Icon name="heart" style={{ color: '#ED4A6A' }} />
+                    <BaseText>{item.name}</BaseText>
+                  </BaseCardItem>
+                </BaseCard>
+              }
+            />
+          </View>
+        </Content>
+
+      </Container>
     );
-  }  
+  }
 }
 
-class DetailsScreen extends React.Component {
+class BookmarkScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Details Screen</Text>
+        <Text>Bookmark Screen</Text>
       </View>
     );
-  }  
+  }
 }
 
-const AppNavigator = createStackNavigator({
-  Home: {
-    screen: HomeScreen,
-  },
-  Details: {
-    screen: DetailsScreen,
-  },
-}, {
-    initialRouteName: 'Home',
-});
+class CollectionScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Collection Screen</Text>
+      </View>
+    );
+  }
+}
 
-const AppContainer = createAppContainer(AppNavigator);
+class SettingsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Settings!</Text>
+      </View>
+    );
+  }
+}
 
+const TabNavigator = createAppContainer (
+  createBottomTabNavigator({
+  Home: { screen: HomeScreen },
+  Bookmark: { screen: BookmarkScreen },
+  Collection: { screen: CollectionScreen },
+  Settings: { screen: SettingsScreen },
+},
+{
+  defaultNavigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ focused, horizontal, tintColor }) => {
+      const { routeName } = navigation.state;
+      let IconComponent = FirstIonicon;
+      let iconName;
+      if (routeName === 'Home') {
+        iconName = `md-home`;
+      } else if (routeName === 'Bookmark') {
+        iconName = `md-bookmark`;
+      } else if (routeName === 'Collection') {
+        iconName = `md-book`;
+      } else if (routeName === 'Settings') {
+        iconName = `md-settings`;
+      }
+
+      // You can return any component that you like here!
+      return <IconComponent name={iconName} size={25} color={tintColor} />;
+    },
+  }),
+  tabBarOptions: {
+    activeTintColor: '#3B8686' ,
+    inactiveTintColor: 'gray',
+  },
+})
+);
 
 export default class FooterTabsExample extends Component {
   
@@ -78,51 +175,9 @@ export default class FooterTabsExample extends Component {
       return <Expo.AppLoading />;
     }
     return (
-      <Container>
-        {/* hide status bar */}
-        <StatusBar hidden />
-        <Header style={{ backgroundColor: '#3B8686' }} searchBar rounded>
-          <Item>
-            <Icon ios='ios-search' android="md-search" />
-            <Input placeholder="Search" />
-          </Item>
-          <BaseButton transparent>
-            <BaseText>Search</BaseText>
-          </BaseButton>
-        </Header>
+          <TabNavigator>
 
-        {/* <AppContainer>
-        </AppContainer> */}
-        {/* min height make content appear */}
-        <Content contentContainerStyle={{ minHeight: 300 }}>
-          <Image
-            resizeMode="contain"
-            source={require('./img/cover.png')}
-            style={styles.canvas} >
-          </Image>
-        </Content>
-
-        <Footer>
-          <FooterTab style={{ backgroundColor: '#3B8686' }}>
-            <BaseButton active style={{ backgroundColor: '#3B8686' }}>
-              <Icon ios='ios-search' android="md-search" style={{fontSize: 20}}/>
-              <BaseText>Search</BaseText>
-            </BaseButton>
-            <BaseButton>
-              <Icon ios='ios-bookmark' android="md-bookmark" style={{fontSize: 20}}/>
-              <BaseText>Saved</BaseText>
-            </BaseButton>
-            <BaseButton>
-              <Icon ios='ios-book' android="md-book" style={{fontSize: 20}}/>
-              <BaseText style={{fontSize: 9}}>Collection</BaseText>
-            </BaseButton>
-            <BaseButton>
-              <Icon ios='ios-settings' android="md-settings" style={{fontSize: 20}}/>
-              <BaseText>Settings</BaseText>
-            </BaseButton>
-          </FooterTab>
-        </Footer>
-      </Container>
+          </TabNavigator>
     );  
   }
 }
