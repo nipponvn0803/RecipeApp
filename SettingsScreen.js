@@ -4,14 +4,7 @@ import * as firebase from 'firebase';
 
 import { Container, Header, Content, Form, Item, Input } from 'native-base';
 
-const config = {
-  apiKey: "AIzaSyDaS12dokSR-kxBtNPEKBwzJy1E55hw0lI",
-  authDomain: "recipeapp-17ee2.firebaseapp.com",
-  databaseURL: "https://recipeapp-17ee2.firebaseio.com",
-  projectId: "recipeapp-17ee2",
-  storageBucket: "recipeapp-17ee2.appspot.com",
-  messagingSenderId: "396404954474"
-};
+import config from './key.js';
 firebase.initializeApp(config);
 
 export default class App extends React.Component {
