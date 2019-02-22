@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Button, ImageBackground } from 'react-native';
 import { createStackNavigator, createAppContainer, StackActions, NavigationActions } from 'react-navigation';
 
 
-import { Container, Header, Content, Form, Item, Input, Tab, Tabs } from 'native-base';
+import { Container, Header, Content, Form, Item, Input, Tab, Tabs, Label } from 'native-base';
 
 import FooterTabsExample from './FooterTabsExample.js';
 
@@ -91,49 +91,125 @@ export class Authen extends React.Component {
     }
   }
   
+  secretLogin = () => {
+      const loginAction = StackActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'Footer' }),
+        ],
+      });
+      this.props.navigation.dispatch(loginAction);                
+  }
+
+  secretBackLogin = () => {
+    const loginAction = StackActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Authen' }),
+      ],
+    });
+    this.props.navigation.dispatch(loginAction);                
+}
+
   render() {
     return (
+      
       <Container>
-        <Tabs>
-          <Tab heading="Tab1">
+        <Tabs tabBarPosition="bottom" >
+          <Tab heading="SIGN IN" tabStyle={{backgroundColor: '#3B8686'}} activeTabStyle={{backgroundColor: '#3B8686'}}>
             <View>
-              <Form>
-                  <Item>
-                  <Input placeholder="Email" onChangeText={email => this.setState({email})}/>
-                  </Item>
-                  <Item last>
-                  <Input placeholder="Password" onChangeText={password => this.setState({password})}/>
-                  </Item>
-                  <TouchableOpacity
-                  onPress={() => {
-                      this.loginUser(this.state.email, this.state.password)
-                      this.redirectAfterLogin()
-                  }}>
-                  <Text>SIGN IN</Text>
-                  </TouchableOpacity>
-              </Form>
+              <ImageBackground 
+              source={{uri:'https://images.pexels.com/photos/255501/pexels-photo-255501.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'}} 
+              style={styles.backgroundImage}>
+              <View style={styles.overlay}/>
+              <View style={styles.formContainer}>
+                <Form style={{marginTop: '50%', flex: 0.8}}>
+                      <Item floatingLabel>
+                        <Label style={{ color: "#999999" }}>Email</Label>
+                        <Input 
+                        style={{ color: "#FFFFFF" }}
+                        onChangeText={email => this.setState({email})} />
+                      </Item>
+                      <Item floatingLabel>
+                        <Label style={{ color: "#999999" }}>Password</Label>
+                        <Input 
+                        style={{ color: "#FFFFFF" }}
+                        onChangeText={password => this.setState({password})}/>
+                      </Item>
+                      <View style={styles.buttonContainer}>
+                        <TouchableOpacity style={styles.button}
+                        onPress={() => {
+                            this.loginUser(this.state.email, this.state.password)
+                            this.redirectAfterLogin()
+                        }}>
+                          <Text style={styles.loginButton}>Sign In</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.facebookButton}
+                        onPress={() => {
+
+                        }}>
+                          <Text style={styles.loginButton}>Sign In via Facebook</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                        onPress={() => {
+                            this.secretLogin()
+                        }}>
+                        <Text>SecretSIGN IN</Text>
+                        </TouchableOpacity>
+                      </View>
+                </Form>
+              </View>
+                
+              </ImageBackground>
             </View>
           </Tab>
-          <Tab heading="Tab2">
+          <Tab heading="SIGN UP" tabStyle={{backgroundColor: '#3B8686'}} activeTabStyle={{backgroundColor: '#3B8686'}}>
             <View>
-              <Form>
-                  <Item>
-                    <Input placeholder="Username" onChangeText={username => this.setState({username})}/>
-                  </Item>
-                  <Item>
-                    <Input placeholder="Email" onChangeText={email => this.setState({email})}/>
-                  </Item>
-                  <Item last>
-                    <Input placeholder="Password" onChangeText={password => this.setState({password})}/>
-                  </Item>
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.signupUser(this.state.email, this.state.password, this.state.username)
-                      this.redirectAfterLogin()
-                    }}>
-                    <Text>SIGN UP</Text>
-                  </TouchableOpacity>
-                </Form>
+              <ImageBackground 
+                source={{uri:'https://images.pexels.com/photos/1437584/pexels-photo-1437584.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'}} 
+                style={styles.backgroundImage}>
+                <View style={styles.overlay}/>
+                <View style={styles.formContainer}>
+                  <Form style={{marginTop: '50%', flex: 0.8}}>
+                      <Item floatingLabel>
+                        <Label style={{ color: "#999999" }}>Username</Label>
+                        <Input 
+                        style={{ color: "#FFFFFF" }}
+                        onChangeText={username => this.setState({username})}/>
+                      </Item>
+                      <Item floatingLabel>
+                        <Label style={{ color: "#999999" }}>Email</Label>
+                        <Input 
+                        style={{ color: "#FFFFFF" }}
+                        onChangeText={email => this.setState({email})}/>
+                      </Item>
+                      <Item floatingLabel>
+                        <Label style={{ color: "#999999" }}>Password</Label>
+                        <Input 
+                        style={{ color: "#FFFFFF" }}
+                        onChangeText={password => this.setState({password})}/>
+                      </Item>
+                      <View style={styles.buttonContainer}>
+                        <TouchableOpacity style={styles.button}
+                          onPress={() => {
+                            this.signupUser(this.state.email, this.state.password, this.state.username)
+                            this.redirectAfterLogin()
+                          }}>
+                          <Text style={styles.loginButton}>Sign Up</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.facebookButton}
+                        onPress={() => {
+
+                        }}>
+                          <Text style={styles.loginButton}>Sign Up via Facebook</Text>
+                        </TouchableOpacity>
+                      </View>
+
+                    </Form>
+                  </View>
+                </ImageBackground>
             </View>
           </Tab>
         </Tabs>
@@ -199,3 +275,48 @@ constructor(props) {
     );  
   }
 }
+
+const styles = StyleSheet.create({
+  backgroundImage: {
+    width: '100%', 
+    height: '100%'
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundColor: 'black',
+    opacity: 0.55
+  },
+  formContainer: {
+    flex: 1, 
+    flexDirection: 'row', 
+    justifyContent: 'center',
+  },
+  button: {
+    marginTop: '10%',
+    width: '70%',
+    paddingVertical: 14,
+    borderRadius: 25,
+    backgroundColor: '#ff6262'
+  },
+  buttonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  loginButton: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#fff'
+  },
+  facebookButton: {
+    marginTop: '10%',
+    width: '70%',
+    paddingVertical: 14,
+    borderRadius: 25,
+    backgroundColor: '#3b5998'
+  }
+});

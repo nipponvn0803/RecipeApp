@@ -99,24 +99,5 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
-  },
-  button: {
-    marginTop: 26,
-    width: '70%',
-    paddingVertical: 14,
-    borderRadius: 25,
-    backgroundColor: '#ff6262'
-  },
-  loginButton: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#fff'
-  },
+
 });
