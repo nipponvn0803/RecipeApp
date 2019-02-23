@@ -8,17 +8,7 @@ import {
   Image
 } from "react-native";
 
-import * as firebase from "firebase";
-
-var config = {
-  apiKey: "AIzaSyDaS12dokSR-kxBtNPEKBwzJy1E55hw0lI",
-  authDomain: "recipeapp-17ee2.firebaseapp.com",
-  databaseURL: "https://recipeapp-17ee2.firebaseio.com",
-  projectId: "recipeapp-17ee2",
-  storageBucket: "recipeapp-17ee2.appspot.com",
-  messagingSenderId: "396404954474"
-};
-firebase.initializeApp(config);
+import firebase from './initFirebase.js';
 
 var firebaseDbh = firebase.database();
 

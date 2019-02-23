@@ -3,14 +3,25 @@ import { StyleSheet, Text, View, TouchableOpacity, Button, ImageBackground } fro
 import { createStackNavigator, createAppContainer, StackActions, NavigationActions } from 'react-navigation';
 
 
-import { Container, Header, Content, Form, Item, Input, Tab, Tabs, Label } from 'native-base';
+import { Container, Header, Content, Form, Item, Input, Root, Tab, Tabs, Toast, Label } from 'native-base';
 
 import FooterTabsExample from './FooterTabsExample.js';
 
 
-import * as firebase from 'firebase';
-import {config} from './key.js';
-firebase.initializeApp(config);
+import firebase from './initFirebase.js';
+
+//ignore timer warning
+import { YellowBox } from 'react-native';
+import _ from 'lodash';
+
+YellowBox.ignoreWarnings(['Setting a timer']);
+const _console = _.clone(console);
+console.warn = message => {
+  if (message.indexOf('Setting a timer') <= -1) {
+    _console.warn(message);
+  }
+};
+
 
 export class Authen extends React.Component {
   constructor(props) {
@@ -60,6 +71,7 @@ export class Authen extends React.Component {
   loginUser = (email, password) => {
     try {
       firebase.auth().signInWithEmailAndPassword(email, password);
+      
     } catch (e) {
       alert(e.toString())
       return;
@@ -78,7 +90,6 @@ export class Authen extends React.Component {
                        // this value to authenticate with your backend server, if
                        // you have one. Use User.getToken() instead.
       // alert("Welcome" + name );
-      alert("Welcome " + email );
       console.log("in " + user.displayName + user.email);
       console.log("in " + user.email);
       const loginAction = StackActions.reset({
@@ -87,7 +98,7 @@ export class Authen extends React.Component {
           NavigationActions.navigate({ routeName: 'Footer' }),
         ],
       });
-      this.props.navigation.dispatch(loginAction);                
+      this.props.navigation.dispatch(loginAction);               
     }
   }
   
@@ -113,7 +124,7 @@ export class Authen extends React.Component {
 
   render() {
     return (
-      
+      <Root>
       <Container>
         <Tabs tabBarPosition="bottom" >
           <Tab heading="SIGN IN" tabStyle={{backgroundColor: '#3B8686'}} activeTabStyle={{backgroundColor: '#3B8686'}}>
@@ -133,6 +144,7 @@ export class Authen extends React.Component {
                       <Item floatingLabel>
                         <Label style={{ color: "#999999" }}>Password</Label>
                         <Input 
+                        secureTextEntry={true}
                         style={{ color: "#FFFFFF" }}
                         onChangeText={password => this.setState({password})}/>
                       </Item>
@@ -147,15 +159,15 @@ export class Authen extends React.Component {
 
                         <TouchableOpacity style={styles.facebookButton}
                         onPress={() => {
-
+                          
                         }}>
                           <Text style={styles.loginButton}>Sign In via Facebook</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
+                        <TouchableOpacity style={styles.facebookButton}
                         onPress={() => {
-                            this.secretLogin()
+                          this.secretLogin()
                         }}>
-                        <Text>SecretSIGN IN</Text>
+                          <Text style={styles.loginButton}>Bypass Login</Text>
                         </TouchableOpacity>
                       </View>
                 </Form>
@@ -187,6 +199,7 @@ export class Authen extends React.Component {
                       <Item floatingLabel>
                         <Label style={{ color: "#999999" }}>Password</Label>
                         <Input 
+                        secureTextEntry={true}
                         style={{ color: "#FFFFFF" }}
                         onChangeText={password => this.setState({password})}/>
                       </Item>
@@ -214,6 +227,7 @@ export class Authen extends React.Component {
           </Tab>
         </Tabs>
       </Container>
+      </Root>
     );
   }
 }

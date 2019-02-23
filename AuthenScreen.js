@@ -5,7 +5,7 @@ import * as firebase from 'firebase';
 import { Container, Header, Content, Form, Item, Input } from 'native-base';
 
 import {config} from './key.js';
-firebase.initializeApp(config);
+
 
 export default class App extends React.Component {
   constructor(props) {

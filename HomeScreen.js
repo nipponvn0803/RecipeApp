@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button as BaseButton, Body as BaseBody, Card as BaseCard, CardItem as BaseCardItem, Container, Content, DeckSwiper as BaseDeckSwiper, Footer, FooterTab, Header, Icon, Item, Input, Left as BaseLeft, Text as BaseText, Thumbnail as BaseThumbnail, View as BaseView } from 'native-base';
+import { Button as BaseButton, Body as BaseBody, Card as BaseCard, CardItem as BaseCardItem, Container, Content, DeckSwiper as BaseDeckSwiper, Footer, FooterTab, Header, Icon, Item, Input, Left as BaseLeft, Text as BaseText, Thumbnail as BaseThumbnail, View as BaseView, Toast } from 'native-base';
 import { AppRegistry, View, Text, Button, Image, StyleSheet, StatusBar, ScrollView } from "react-native";
 
 const styles = StyleSheet.create({
