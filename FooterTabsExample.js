@@ -30,8 +30,8 @@ const TabNavigator = createAppContainer(
       Home: { screen: HomeScreen },
       Bookmark: { screen: BookmarkScreen },
       Collection: { screen: CollectionScreen },
-      Settings: { screen: SettingsScreen },
-      Page: { screen: PageScreen }
+      Settings: { screen: SettingsScreen }
+      //Page: { screen: PageScreen }
     },
     {
       defaultNavigationOptions: ({ navigation }) => ({
@@ -47,9 +47,9 @@ const TabNavigator = createAppContainer(
             iconName = `md-book`;
           } else if (routeName === "Settings") {
             iconName = `md-settings`;
-          } else if (routeName === "Page") {
-            iconName = `md-book`;
-          }
+          } //else if (routeName === "Page") {
+          //iconName = `md-book`;
+          //}
 
           // You can return any component that you like here!
           return <IconComponent name={iconName} size={25} color={tintColor} />;

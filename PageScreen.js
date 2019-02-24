@@ -1,25 +1,88 @@
-import React, { Component } from "react";
+/* import React, { Component } from "react";
 import {
   AppRegistry,
   Text,
   View,
   ListView,
   ActivityIndicator,
-  Image
+  Image,
+  StatusBar
 } from "react-native";
+import {
+  Button as BaseButton,
+  Body as BaseBody,
+  Card as BaseCard,
+  CardItem as BaseCardItem,
+  Container,
+  Content,
+  DeckSwiper as BaseDeckSwiper,
+  Footer,
+  FooterTab,
+  Header,
+  Icon,
+  Item,
+  Input,
+  Left as BaseLeft,
+  Text as BaseText,
+  Thumbnail as BaseThumbnail,
+  View as BaseView,
+  Toast
+} from "native-base";
 
-import firebase from './initFirebase.js';
+  import firebase from "./initFirebase.js";
 
-var firebaseDbh = firebase.database();
+  var firebaseDbh = firebase.database();
 
 // Rendering a row
-const WORow = ({ name, reps }) => (
-  <View>
-    <Text>{name}</Text>
-    <View>
-      <Image source={{ uri: "https://facebook.github.io/react/logo-og.png" }} />
-    </View>
+const WORow = ({ name, ingrs, img }) => (
+  <View style={styles.deckSwiper}>
+  <View style={{ flex: 0.8, height: 220 }}>
+    <BaseText style={[styles.deckSwiperTitle, styles.boldText]}>
+      New recipes
+    </BaseText>
+    <ScrollView horizontal={true}>
+      <View style={{ flexDirection: "column" }}>
+        <Image
+          style={styles.imageHorizontal}
+          source={require("./img/cover.png")}
+        />
+        <BaseText style={styles.textHorizontal}>Name 1</BaseText>
+      </View>
+
+      <View style={styles.columnFlex}>
+        <Image
+          style={styles.imageHorizontal}
+          source={require("./img/cover.png")}
+        />
+        <BaseText style={styles.textHorizontal}>Name 2</BaseText>
+      </View>
+
+      <View style={styles.columnFlex}>
+        <Image
+          style={styles.imageHorizontal}
+          source={require("./img/cover.png")}
+        />
+        <BaseText style={styles.textHorizontal}>Name 3</BaseText>
+      </View>
+
+      <View style={styles.columnFlex}>
+        <Image
+          style={styles.imageHorizontal}
+          source={require("./img/cover.png")}
+        />
+        <BaseText style={styles.textHorizontal}>Name 4</BaseText>
+      </View>
+
+      <View style={styles.columnFlex}>
+        <Image
+          style={styles.imageHorizontal}
+          source={require("./img/cover.png")}
+        />
+        <BaseText style={styles.textHorizontal}>Name 5</BaseText>
+      </View>
+    </ScrollView>
   </View>
+</View>
 );
 
 export default class Workout extends Component {
@@ -49,7 +112,7 @@ export default class Workout extends Component {
     this.state.dbulref.off("value");
   }
   renderRow(rd) {
-    return <WORow name={rd.name} reps={rd.image} />;
+    return <WORow name={rd.name} ingrs={rd.ingredients} img={rd.image} />;
   }
   render() {
     if (this.state.loading) {
@@ -60,13 +123,39 @@ export default class Workout extends Component {
         </View>
       );
     }
+
     return (
-      <View>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={rowData => this.renderRow(rowData)}
-        />
-      </View>
+      <Container>
+        <StatusBar hidden />
+        <Header
+          style={{
+            backgroundColor: "#3B8686",
+            flexDirection: "column",
+            height: 60
+          }}
+          searchBar
+          rounded
+        >
+          <BaseText
+            style={{
+              fontSize: 23,
+              fontWeight: "bold",
+              color: "white",
+              marginBottom: 20,
+              marginTop: 20
+            }}
+          >
+            RecipeApp
+          </BaseText>
+        </Header>
+        <View>
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={rowData => this.renderRow(rowData)}
+          />
+        </View>
+      </Container>
     );
   }
 }
+*/
