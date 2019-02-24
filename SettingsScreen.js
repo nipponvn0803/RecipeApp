@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Button } from "react-native";
 import * as firebase from 'firebase';
-import { createStackNavigator, createAppContainer, StackActions, NavigationActions } from 'react-navigation';
 
+import { redirectAfterSignOut } from './FooterTabsExample.js';
 
 export default class SettingsScreen extends React.Component {    
   logout = () => {
     firebase.auth().signOut().then(function() {
       // Sign-out successful.
-      alert("Sigout successully");
+      alert("Sigout successully"); 
+      redirectAfterSignOut();
     }).catch(function(error) {
       // An error happened.
     });
+  }
+
+  handleSignOut() {
+    this.logout;
   }
     render() {
       return (
@@ -20,7 +25,9 @@ export default class SettingsScreen extends React.Component {
               onPress={this.logout}
               title="Sign out"
               />
+
         </View>
+
       );
     }
   }

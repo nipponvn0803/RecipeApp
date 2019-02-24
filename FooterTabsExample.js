@@ -21,7 +21,7 @@ import { Ionicons as FirstIonicon } from "@expo/vector-icons";
 
 import HomeScreen from "./HomeScreen.js";
 import BookmarkScreen from "./BookmarkScreen.js";
-import CollectionScreen from "./CollectionScreen.js";
+import TimerScreen from "./TimerScreen.js";
 import SettingsScreen from "./SettingsScreen.js";
 import PageScreen from "./PageScreen";
 const TabNavigator = createAppContainer(
@@ -29,9 +29,9 @@ const TabNavigator = createAppContainer(
     {
       Home: { screen: HomeScreen },
       Bookmark: { screen: BookmarkScreen },
-      Collection: { screen: CollectionScreen },
-      Settings: { screen: SettingsScreen }
-      //Page: { screen: PageScreen }
+      Timer: { screen: TimerScreen },
+      Settings: { screen: SettingsScreen },
+      // Page: { screen: PageScreen }
     },
     {
       defaultNavigationOptions: ({ navigation }) => ({
@@ -43,8 +43,8 @@ const TabNavigator = createAppContainer(
             iconName = `md-home`;
           } else if (routeName === "Bookmark") {
             iconName = `md-bookmark`;
-          } else if (routeName === "Collection") {
-            iconName = `md-book`;
+          } else if (routeName === "Timer") {
+            iconName = `md-clock`;
           } else if (routeName === "Settings") {
             iconName = `md-settings`;
           } //else if (routeName === "Page") {
@@ -62,6 +62,16 @@ const TabNavigator = createAppContainer(
     }
   )
 );
+
+export function redirectAfterSignOut() {
+  const signOutAction = StackActions.reset({
+    index: 0,
+    actions: [
+      NavigationActions.navigate({ routeName: 'Authen' }),
+    ],
+  });
+  this.props.navigation.dispatch(signOutAction);  
+}
 
 export default class FooterTabsExample extends Component {
   render() {
