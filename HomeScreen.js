@@ -91,7 +91,7 @@ const cards = [
   }
 ];
 const WORow = ({ name, ingrs, img }) => (
-  <View style={{ flexDirection: "column" }}>
+  <View style={{ flexDirection: "row" }}>
     <Image style={styles.imageHorizontal} source={require("./img/cover.png")} />
     <BaseText style={styles.textHorizontal}>{name}</BaseText>
   </View>
