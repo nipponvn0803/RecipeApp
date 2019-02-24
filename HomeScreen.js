@@ -212,7 +212,7 @@ export default class HomeScreen extends React.Component {
                 New recipes
               </BaseText>
               <ScrollView horizontal={true}>
-                <View>
+                <View  style={ styles.columnFlex }>
                   <ListView
                     dataSource={this.state.dataSource}
                     renderRow={rowData => this.renderRow(rowData)}
