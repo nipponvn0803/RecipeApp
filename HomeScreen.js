@@ -30,10 +30,11 @@ import {
   StatusBar,
   ScrollView,
   ListView,
-  ActivityIndicator
+  ActivityIndicator,
+  TouchableOpacity
 } from "react-native";
 import firebase from "./initFirebase.js";
-
+import { StackActions, NavigationActions } from "react-navigation";
 var firebaseDbh = firebase.database();
 const styles = StyleSheet.create({
   coverPhoto: {
@@ -63,7 +64,8 @@ const styles = StyleSheet.create({
   imageHorizontal: {
     width: 150,
     height: 150,
-    marginRight: 20
+    marginLeft: 20,
+    marginTop: 7
   },
 
   textHorizontal: {
@@ -91,13 +93,24 @@ const cards = [
     image: require("./img/3.jpg")
   }
 ];
+
 const WORow = ({ name, ingrs, img }) => (
   <View style={{ flexDirection: "row" }}>
-    <Image style={styles.imageHorizontal} source={require("./img/cover.png")} />
-    <BaseText style={styles.textHorizontal}>{name}</BaseText>
+    <Image style={styles.imageHorizontal} source={require("./img/1.jpg")} />
+    <BaseText style={{ marginLeft: 10, marginTop: 25, fontWeight: "bold" }}>
+      {name}
+    </BaseText>
   </View>
 );
+class Collection extends React.Component {
+  static navigationOptions = {
+    title: "Collection"
+  };
+}
 export default class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: "Home"
+  };
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({
@@ -131,7 +144,7 @@ export default class HomeScreen extends React.Component {
       return (
         <View>
           <ActivityIndicator />
-          <Spinner color = '#3B8686' />
+          <Spinner color="#3B8686" />
         </View>
       );
     }
@@ -207,35 +220,37 @@ export default class HomeScreen extends React.Component {
               />
             </View>
           </View>
-          <View style={styles.deckSwiper}>
-            <View style={{ flex: 0.8, height: 220 }}>
-              <BaseText style={[styles.deckSwiperTitle, styles.boldText]}>
-                New recipes
-              </BaseText>
-              <ScrollView horizontal={true}>
-                <View  style={ styles.columnFlex }>
-                  <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={rowData => this.renderRow(rowData)}
-                  />
-                </View>
-              </ScrollView>
+          <View>
+            <BaseText
+              style={{ marginLeft: 20, fontWeight: "bold", fontSize: 22 }}
+            >
+              New recipes
+            </BaseText>
+
+            <View>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("Page")}
+              >
+                <ListView
+                  dataSource={this.state.dataSource}
+                  renderRow={rowData => this.renderRow(rowData)}
+                />
+              </TouchableOpacity>
             </View>
           </View>
 
-          <View style={styles.deckSwiper}>
-            <View style={{ flex: 0.8, height: 220 }}>
-              <BaseText style={[styles.deckSwiperTitle, styles.boldText]}>
-                Popular recipes
-              </BaseText>
-              <ScrollView horizontal={true}>
-                <View>
-                  <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={rowData => this.renderRow(rowData)}
-                  />
-                </View>
-              </ScrollView>
+          <View>
+            <BaseText
+              style={{ marginLeft: 20, fontWeight: "bold", fontSize: 22 }}
+            >
+              Popular recipes
+            </BaseText>
+
+            <View>
+              <ListView
+                dataSource={this.state.dataSource}
+                renderRow={rowData => this.renderRow(rowData)}
+              />
             </View>
           </View>
         </Content>

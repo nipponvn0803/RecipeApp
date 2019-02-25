@@ -1,14 +1,13 @@
-import * as firebase from 'firebase';
-import {config} from './key.js';
+import * as firebase from "firebase";
+import { config } from "./key";
 firebase.initializeApp(config);
+import { YellowBox } from "react-native";
+import _ from "lodash";
 
-import { YellowBox } from 'react-native';
-import _ from 'lodash';
-
-YellowBox.ignoreWarnings(['Setting a timer']);
+YellowBox.ignoreWarnings(["Setting a timer"]);
 const _console = _.clone(console);
 console.warn = message => {
-  if (message.indexOf('Setting a timer') <= -1) {
+  if (message.indexOf("Setting a timer") <= -1) {
     _console.warn(message);
   }
 };
