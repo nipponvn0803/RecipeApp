@@ -34,13 +34,12 @@ import {
   TouchableOpacity
 } from "react-native";
 import firebase from "./initFirebase.js";
-import { StackActions, NavigationActions } from "react-navigation";
+
 var firebaseDbh = firebase.database();
 const styles = StyleSheet.create({
   coverPhoto: {
-    flex: 1,
-    width: null,
-    height: null
+    width: 360,
+    height: 250
   },
 
   deckSwiper: {
@@ -97,16 +96,12 @@ const cards = [
 const WORow = ({ name, ingrs, img }) => (
   <View style={{ flexDirection: "row" }}>
     <Image style={styles.imageHorizontal} source={require("./img/1.jpg")} />
-    <BaseText style={{ marginLeft: 10, marginTop: 25, fontWeight: "bold" }}>
+    <BaseText style={{ marginLeft: 20, marginTop: 15, fontWeight: "bold" }}>
       {name}
     </BaseText>
   </View>
 );
-class Collection extends React.Component {
-  static navigationOptions = {
-    title: "Collection"
-  };
-}
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     title: "Home"
@@ -222,21 +217,27 @@ export default class HomeScreen extends React.Component {
           </View>
           <View>
             <BaseText
-              style={{ marginLeft: 20, fontWeight: "bold", fontSize: 22 }}
+              style={{
+                marginTop: 250,
+                marginLeft: 20,
+                fontWeight: "bold",
+                fontSize: 22
+              }}
             >
               New recipes
             </BaseText>
-
-            <View>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("Page")}
-              >
-                <ListView
-                  dataSource={this.state.dataSource}
-                  renderRow={rowData => this.renderRow(rowData)}
-                />
-              </TouchableOpacity>
-            </View>
+            <ScrollView horizontal={true}>
+              <View>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate("Page")}
+                >
+                  <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={rowData => this.renderRow(rowData)}
+                  />
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
           </View>
 
           <View>
