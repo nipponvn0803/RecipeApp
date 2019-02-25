@@ -17,6 +17,7 @@ import {
   Text as BaseText,
   Thumbnail as BaseThumbnail,
   View as BaseView,
+  Spinner,
   Toast
 } from "native-base";
 import {
@@ -130,7 +131,7 @@ export default class HomeScreen extends React.Component {
       return (
         <View>
           <ActivityIndicator />
-          <Text>Loading</Text>
+          <Spinner color = '#3B8686' />
         </View>
       );
     }
