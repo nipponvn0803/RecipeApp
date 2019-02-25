@@ -31,7 +31,7 @@ const TabNavigator = createAppContainer(
       Bookmark: { screen: BookmarkScreen },
       Timer: { screen: TimerScreen },
       Settings: { screen: SettingsScreen },
-      // Page: { screen: PageScreen }
+      Page: { screen: PageScreen }
     },
     {
       defaultNavigationOptions: ({ navigation }) => ({
@@ -47,9 +47,9 @@ const TabNavigator = createAppContainer(
             iconName = `md-clock`;
           } else if (routeName === "Settings") {
             iconName = `md-settings`;
-          } //else if (routeName === "Page") {
-          //iconName = `md-book`;
-          //}
+          } else if (routeName === "Page") {
+            iconName = `md-book`;
+          }
 
           // You can return any component that you like here!
           return <IconComponent name={iconName} size={25} color={tintColor} />;
@@ -66,11 +66,9 @@ const TabNavigator = createAppContainer(
 export function redirectAfterSignOut() {
   const signOutAction = StackActions.reset({
     index: 0,
-    actions: [
-      NavigationActions.navigate({ routeName: 'Authen' }),
-    ],
+    actions: [NavigationActions.navigate({ routeName: "Authen" })]
   });
-  this.props.navigation.dispatch(signOutAction);  
+  this.props.navigation.dispatch(signOutAction);
 }
 
 export default class FooterTabsExample extends Component {
