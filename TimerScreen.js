@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListView , TimePickerAndroid, View, StyleSheet } from "react-native";
+import { Alert, ListView , TimePickerAndroid, View, StyleSheet, TouchableOpacity, Vibration } from "react-native";
 import { Container, Content, Header, Left, Body, Right, Button, Icon, Title, List, ListItem, Text, Picker, Form  } from 'native-base';
 
 export default class TimerScreen extends React.Component {
@@ -8,13 +8,14 @@ export default class TimerScreen extends React.Component {
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       basic: true,
-      listViewData: [
-
-      ],
+      listViewData: [],
       selectedMinute: 0,
       selectedSecond: 0,
       combineTimer: 0,
-      showingTimer: 0 
+      showingTimer: 0,
+      timerRunning: false,
+      iconActive:"pause",
+      timer1: null
     };
   }
   deleteRow(secId, rowId, rowMap) {
@@ -22,6 +23,7 @@ export default class TimerScreen extends React.Component {
     const newData = [...this.state.listViewData];
     newData.splice(rowId, 1);
     this.setState({ listViewData: newData });
+    clearInterval(timer1)
   }
   addRow(secId, rowId, rowMap) {
     rowMap[`${secId}${rowId}`].props.closeRow();
@@ -57,7 +59,7 @@ export default class TimerScreen extends React.Component {
       this.state.selectedSecond
     })
 
-    let timer1 = setInterval(() => {
+    timer1 = setInterval(() => {
       minutes = Number.parseInt(this.state.combineTimer / 60, 10)
       seconds = Number.parseInt(this.state.combineTimer % 60, 10);
 
@@ -72,6 +74,10 @@ export default class TimerScreen extends React.Component {
         listViewData: [...this.state.listViewData, this.state.showingTimer.toString()]
       })
 
+      this.setState({
+        timerRunning: true
+      })
+
       if (this.state.listViewData.length > 1) {
         this.setState({
           listViewData: this.state.listViewData.splice(1, 1)
@@ -81,10 +87,72 @@ export default class TimerScreen extends React.Component {
  
       if (--this.state.combineTimer < 0) {
         clearInterval(timer1)
-        alert("Timer finished!")
+        Vibration.vibrate([1000, 2000, 3000], true);
+        Alert.alert(
+          'Alert',
+          'TImer finished!',
+          [
+            {text: 'OK', onPress: () => Vibration.cancel()},
+          ],
+          {cancelable: false},
+        );
       }
     }, 1000);
 
+  }
+  togglePlayPause = () => {
+    var remainingTime;
+    if (this.state.timerRunning == true) {
+      clearInterval(timer1)
+      this.setState({
+        timerRunning: false,
+        iconActive: "play"
+      })
+    } else if (this.state.timerRunning == false) {
+      timer1 = setInterval(() => {
+        minutes = Number.parseInt(this.state.combineTimer / 60, 10)
+        seconds = Number.parseInt(this.state.combineTimer % 60, 10);
+  
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+  
+        this.setState({
+          showingTimer: minutes + ":" + seconds
+        })
+  
+        this.setState({
+          listViewData: [...this.state.listViewData, this.state.showingTimer.toString()]
+        })
+  
+        this.setState({
+          timerRunning: true
+        })
+  
+        if (this.state.listViewData.length > 1) {
+          this.setState({
+            listViewData: this.state.listViewData.splice(1, 1)
+          })
+        }
+  
+   
+        if (--this.state.combineTimer < 0) {
+          clearInterval(timer1)
+          Vibration.vibrate([1000, 2000, 3000], true);
+          Alert.alert(
+            'Alert',
+            'TImer finished!',
+            [
+              {text: 'OK', onPress: () => Vibration.cancel()},
+            ],
+            {cancelable: false},
+          );
+        }
+      }, 1000);
+      this.setState({
+        timerRunning: true,
+        iconActive: "pause"
+      })
+    }
   }
 
     render() {
@@ -100,11 +168,6 @@ export default class TimerScreen extends React.Component {
           <Body>
             <Title>Timer</Title>
           </Body>
-          <Right>
-            <Button transparent>
-              <Icon name='add' />
-            </Button>
-          </Right>
         </Header>
 
         <Content>
@@ -135,14 +198,14 @@ export default class TimerScreen extends React.Component {
             </Picker>
           </Form>
 
-          <View style={{flex:1,flexDirection: 'column', padding: 20}}>
+          <View style={{flex:1,flexDirection: 'column', padding: 20,  justifyContent: 'center', alignItems: 'center'}}>
               {/* Testing purpose */}
             {/* <Text>{this.state.showingTimer}</Text>
             <Text>{this.state.combineTimer}</Text>
             <Text>{this.state.listViewData}</Text> */}
-            <Button onPress={this.startTimer}>
-              <Text>Add Timer</Text>
-            </Button>
+            <TouchableOpacity onPress={this.startTimer} style={styles.button}>
+              <Text style={styles.loginButton}>Add Timer</Text>
+            </TouchableOpacity>
           </View>
     
           <List
@@ -154,8 +217,8 @@ export default class TimerScreen extends React.Component {
                 <Text> {data} </Text>
               </ListItem>}
             renderLeftHiddenRow={data =>
-              <Button full onPress={() => alert(data)}>
-                <Icon active name="information-circle" />
+              <Button full onPress={this.togglePlayPause}>
+                <Icon active name={this.state.iconActive} />
               </Button>}
             renderRightHiddenRow={(data, secId, rowId, rowMap) =>
               <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
@@ -173,5 +236,18 @@ export default class TimerScreen extends React.Component {
     container: {
       flex: 1,
       justifyContent: 'center',
+    },
+    button: {
+      marginTop: '5%',
+      width: '70%',
+      paddingVertical: 14,
+      borderRadius: 25,
+      backgroundColor: '#3B8686'
+    },
+    loginButton: {
+      textAlign: 'center',
+      fontWeight: 'bold',
+      fontSize: 16,
+      color: '#fff'
     },
   });
