@@ -34,6 +34,9 @@ import {
   TouchableOpacity
 } from "react-native";
 import firebase from "./initFirebase.js";
+import {db} from "./initFirebase.js";
+import PropTypes from 'prop-types';
+import ItemComponent from './ItemComponent.js';
 
 var firebaseDbh = firebase.database();
 const styles = StyleSheet.create({
@@ -67,11 +70,13 @@ const styles = StyleSheet.create({
   imageHorizontal: {
     width: 150,
     height: 150,
-    marginLeft: 20,
-    marginTop: 7
+    marginRight: 15,
+    marginTop: 7,
+    borderRadius:10,
   },
 
   textHorizontal: {
+    marginRight: 15,
     marginTop: 10
   }
 });
@@ -97,56 +102,63 @@ const cards = [
   }
 ];
 
-const WORow = ({ name, ingrs, img }) => (
-  <View style={{ flexDirection: "row" }}>
-    <Image style={styles.imageHorizontal} source={require("./img/1.jpg")} />
-    <BaseText style={{ marginLeft: 20, marginTop: 15, fontWeight: "bold" }}>
-      {name}
-    </BaseText>
-  </View>
-);
+let itemsRef = db.ref('/recipes');
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    title: "Home"
-  };
+
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
-    this.state = { loading: true, dbh: firebaseDbh, dataSource: ds };
+
+    this.state = { 
+      loading: true, 
+      items: [],
+      image: [],
+      ingredients: [],
+      name: [],
+      key: []
+    };
   }
+  
   componentDidMount() {
-    var dbref = this.state.dbh.ref("recipes");
-    this.setState({ dbulref: dbref });
-    dbref.on("value", e => {
-      var rows = [];
-      if (e && e.val() && e.val().map) {
-        e.val().map(v => rows.push(v));
-      }
-      var ds = this.state.dataSource.cloneWithRows(rows);
-      this.setState({
-        dataSource: ds,
-        loading: false
-      });
-    });
-  }
-  componentDidUnMount() {
-    this.state.dbulref.off("value");
-  }
-  renderRow(rd) {
-    return <WORow name={rd.name} ingrs={rd.ingredients} img={rd.image} />;
-  }
-  render() {
-    if (this.state.loading) {
-      return (
-        <View>
-          <ActivityIndicator />
-          <Spinner color="#3B8686" />
-        </View>
-      );
+    itemsRef.on('value', (snapshot) => {
+        let data = snapshot.val();
+        let items = Object.values(data);
+        this.setState({items});
+        for (let i = 0; i < this.state.items.length; i++) {
+          this.setState({
+            image : this.state.image.concat(this.state.items[i].image),
+            ingredients : this.state.ingredients.concat(this.state.items[i].ingredients),
+            name : this.state.name.concat(this.state.items[i].name),
+            key : this.state.key.concat(this.state.items[i].key)
+          })
+          
+        }
+     });
     }
+  
+  displayDataNew(dataLength) {
+    let viewArray = [];
+    let num = 1;
+    for (let i = 0; i < dataLength; i++) {
+      viewArray.push(
+        <View key={num++} style={{ flexDirection: 'column' }}>
+          <Image style={styles.imageHorizontal} source={{uri:this.state.image[i]}} ></Image>
+          <BaseText style={styles.textHorizontal}>{this.state.name[i]}</BaseText>    
+        </View>             
+      )
+    }
+    return viewArray
+  }
+
+  render() {
+    // if (this.state.loading) {
+    //   return (
+    //     <View>
+    //       <ActivityIndicator />
+    //       <Spinner color="#3B8686" />
+    //     </View>
+    //   );
+    // }
     return (
       <Container>
         {/* hide status bar */}
@@ -181,7 +193,7 @@ export default class HomeScreen extends React.Component {
         </Header>
 
         {/* min height make content appear */}
-        <Content contentContainerStyle={{ minHeight: 1500, flex: 1 }}>
+        <Content contentContainerStyle={{ minHeight: 1300, flex: 1 }}>
           <Image
             source={require("./img/cover.png")}
             style={styles.coverPhoto}
@@ -218,45 +230,29 @@ export default class HomeScreen extends React.Component {
               />
             </View>
           </View>
-          <View>
-            <BaseText
-              style={{
-                marginTop: 250,
-                marginLeft: 20,
-                fontWeight: "bold",
-                fontSize: 22
-              }}
-            >
-              New recipes
-            </BaseText>
-            <ScrollView horizontal={true}>
+              
+          <View style={styles.deckSwiper}>
+            <View style={{ flex: 0.8 }}>
+              <BaseText style={[styles.deckSwiperTitle, styles.boldText]}>New recipes</BaseText>
               <View>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate("Page")}
-                >
-                  <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={rowData => this.renderRow(rowData)}
-                  />
-                </TouchableOpacity>
+                <ScrollView horizontal={true} >           
+                  {this.displayDataNew(this.state.items.length)}
+                </ScrollView>
               </View>
-            </ScrollView>
-          </View>
-
-          <View>
-            <BaseText
-              style={{ marginLeft: 20, fontWeight: "bold", fontSize: 22 }}
-            >
-              Popular recipes
-            </BaseText>
-
-            <View>
-              <ListView
-                dataSource={this.state.dataSource}
-                renderRow={rowData => this.renderRow(rowData)}
-              />
             </View>
           </View>
+
+          <View style={styles.deckSwiper}>
+            <View style={{ flex: 0.8 }}>
+              <BaseText style={[styles.deckSwiperTitle, styles.boldText]}>Popular recipes</BaseText>
+              <View>
+                <ScrollView horizontal={true} >           
+                  {this.displayDataNew(this.state.items.length)}
+                </ScrollView>
+              </View>
+            </View>
+          </View>
+          
         </Content>
       </Container>
     );
