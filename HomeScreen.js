@@ -329,11 +329,12 @@ class PageScreen extends React.Component {
       textBig: {
         marginTop: 30,
         marginLeft: 15,
-        fontSize: 18,
-        color: "black"
+        fontSize: 20,
+        color: "#103b31",
+        fontWeight: "bold"
       },
       textSmall: {
-        fontSize: 20,
+        fontSize: 18,
         marginLeft: 15,
         marginTop: 10,
         color: "black"
