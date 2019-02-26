@@ -31,7 +31,8 @@ import {
   ScrollView,
   ListView,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableHighlight
 } from "react-native";
 import { db } from "./initFirebase.js";
 import PropTypes from "prop-types";
@@ -128,10 +129,9 @@ class HomeScreens extends React.Component {
             this.state.items[i].ingredients
           ),
           name: this.state.name.concat(this.state.items[i].name),
-          key: this.state.key.concat(this.state.items[i].key)
+          key: this.state.key.concat(this.state.items[i].id)
         });
       }
-      id = this.state.key.concat(this.state.items[i].key);
     });
   }
 
@@ -145,7 +145,7 @@ class HomeScreens extends React.Component {
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate("Page", {
-                itemid: id[i]
+                itemid: this.state.key[i]
               });
             }}
           >
@@ -266,6 +266,7 @@ class HomeScreens extends React.Component {
     );
   }
 }
+
 class PageScreen extends React.Component {
   constructor(props) {
     super();
@@ -321,7 +322,7 @@ class PageScreen extends React.Component {
                 marginLeft: 15
               }}
             >
-              {this.state.name[id[i]]}
+              itemId: {JSON.stringify(itemid)}
             </Text>
           </View>
           <TouchableHighlight
@@ -435,10 +436,11 @@ class PageScreen extends React.Component {
     );
   }
 }
+
 const RootStack = createStackNavigator(
   {
     Home: HomeScreens,
-    Details: PageScreen
+    Page: PageScreen
   },
   {
     initialRouteName: "Home"
@@ -452,3 +454,4 @@ export default class Homescreen extends React.Component {
     return <AppContainer />;
   }
 }
+
