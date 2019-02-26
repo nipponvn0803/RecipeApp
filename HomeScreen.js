@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     flex: 1,
     width: null,
-    height: null
+    height: null,
+    minHeight: 250
   },
 
   deckSwiper: {
@@ -242,7 +243,7 @@ class HomeScreens extends React.Component {
         </Header>
 
         {/* min height make content appear */}
-        <Content contentContainerStyle={{ minHeight: 1100, flex: 1 }}>
+        <Content contentContainerStyle={{ minHeight: 1400, flex: 1 }}>
           <Image
             source={require("./img/cover.png")}
             style={styles.coverPhoto}
