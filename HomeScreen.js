@@ -38,19 +38,22 @@ import { StackActions, NavigationActions } from "react-navigation";
 var firebaseDbh = firebase.database();
 const styles = StyleSheet.create({
   coverPhoto: {
+    resizeMode: 'cover', 
     flex: 1,
-    width: null,
-    height: null
+      width: null,
+      height: null,
   },
 
   deckSwiper: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: 40
   },
 
   deckSwiperTitle: {
-    fontSize: 23
+    fontSize: 23,
+    marginBottom: 20
   },
 
   boldText: {
@@ -170,7 +173,7 @@ export default class HomeScreen extends React.Component {
               marginTop: 20
             }}
           >
-            RecipeApp!!!
+            RecipeApp
           </BaseText>
           <Item>
             <Icon ios="ios-search" android="md-search" />
@@ -182,9 +185,8 @@ export default class HomeScreen extends React.Component {
         </Header>
 
         {/* min height make content appear */}
-        <Content contentContainerStyle={{ minHeight: 1150, flex: 1 }}>
+        <Content contentContainerStyle={{ minHeight: 1500, flex: 1 }}>
           <Image
-            resizeMode="contain"
             source={require("./img/cover.png")}
             style={styles.coverPhoto}
           />

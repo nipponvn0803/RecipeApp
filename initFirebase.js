@@ -1,6 +1,7 @@
 import * as firebase from "firebase";
 import { config } from "./key";
 firebase.initializeApp(config);
+
 import { YellowBox } from "react-native";
 import _ from "lodash";
 
@@ -13,3 +14,4 @@ console.warn = message => {
 };
 
 export default firebase;
+export const db = firebase.database();
