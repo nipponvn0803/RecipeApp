@@ -78,7 +78,15 @@ const styles = StyleSheet.create({
     marginTop: 10
   }
 });
-
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreens,
+    Page: PageScreen
+  },
+  {
+    initialRouteName: "Home"
+  }
+);
 //Cards in DeckSwiper, Homescreen
 const cards = [
   {
@@ -321,7 +329,7 @@ class PageScreen extends React.Component {
                 marginLeft: 15
               }}
             >
-              {this.state.name[id[i]]}
+              {this.state.name[itemid]}
             </Text>
           </View>
           <TouchableHighlight
@@ -435,15 +443,6 @@ class PageScreen extends React.Component {
     );
   }
 }
-const RootStack = createStackNavigator(
-  {
-    Home: HomeScreens,
-    Details: PageScreen
-  },
-  {
-    initialRouteName: "Home"
-  }
-);
 
 const AppContainer = createAppContainer(RootStack);
 
