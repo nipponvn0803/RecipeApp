@@ -7,7 +7,7 @@ import {
 
 import Authen from "./AuthenScreen.js";
 import FooterTabsExample from "./FooterTabsExample.js";
-import PageScreen from "./PageScreen";
+//import PageScreen from "./PageScreen";
 export const RootStack = createStackNavigator(
   {
     Authen: {
@@ -21,13 +21,6 @@ export const RootStack = createStackNavigator(
       screen: FooterTabsExample,
       navigationOptions: {
         title: "Home",
-        header: null //this will hide the header
-      }
-    },
-    Page: {
-      screen: PageScreen,
-      navigationOptions: {
-        title: "Page",
         header: null //this will hide the header
       }
     }

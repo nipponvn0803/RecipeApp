@@ -23,15 +23,15 @@ import HomeScreen from "./HomeScreen.js";
 import BookmarkScreen from "./BookmarkScreen.js";
 import TimerScreen from "./TimerScreen.js";
 import SettingsScreen from "./SettingsScreen.js";
-import PageScreen from "./PageScreen";
+//import PageScreen from "./PageScreen";
 const TabNavigator = createAppContainer(
   createBottomTabNavigator(
     {
       Home: { screen: HomeScreen },
       Bookmark: { screen: BookmarkScreen },
       Timer: { screen: TimerScreen },
-      Settings: { screen: SettingsScreen },
-      Page: { screen: PageScreen }
+      Settings: { screen: SettingsScreen }
+      // Page: { screen: PageScreen }
     },
     {
       defaultNavigationOptions: ({ navigation }) => ({
@@ -47,9 +47,9 @@ const TabNavigator = createAppContainer(
             iconName = `md-clock`;
           } else if (routeName === "Settings") {
             iconName = `md-settings`;
-          } else if (routeName === "Page") {
-            iconName = `md-book`;
-          }
+          } //else if (routeName === "Page") {
+          //iconName = `md-book`;
+          //}
 
           // You can return any component that you like here!
           return <IconComponent name={iconName} size={25} color={tintColor} />;
