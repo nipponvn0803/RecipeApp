@@ -79,15 +79,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   }
 });
-const RootStack = createStackNavigator(
-  {
-    Home: HomeScreens,
-    Page: PageScreen
-  },
-  {
-    initialRouteName: "Home"
-  }
-);
+
 //Cards in DeckSwiper, Homescreen
 const cards = [
   {
@@ -295,27 +287,6 @@ class PageScreen extends React.Component {
         <ScrollView>
           {/* hide status bar */}
           <StatusBar hidden />
-          <Header
-            style={{
-              backgroundColor: "#3B8686",
-              flexDirection: "column",
-              height: 80
-            }}
-            searchBar
-            rounded
-          >
-            <BaseText
-              style={{
-                fontSize: 23,
-                fontWeight: "bold",
-                color: "white",
-                marginBottom: 20,
-                marginTop: 20
-              }}
-            >
-              RecipeApp
-            </BaseText>
-          </Header>
 
           <Image
             source={require("./img/1.jpg")}
@@ -447,11 +418,27 @@ class PageScreen extends React.Component {
 
 const RootStack = createStackNavigator(
   {
-    Home: HomeScreens,
-    Page: PageScreen
+    Home: {
+      screen: HomeScreens,
+      navigationOptions: {
+        header: null //this will hide the header
+      }
+    },
+    Page: {
+      screen: PageScreen,
+      navigationOptions: {
+        title: "Details",
+      }
+    },
   },
   {
     initialRouteName: "Home"
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false
+    }
   }
 );
 
