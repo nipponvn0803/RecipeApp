@@ -7,6 +7,7 @@ import {
 
 import Authen from "./AuthenScreen.js";
 import FooterTabsExample from "./FooterTabsExample.js";
+import SettingsScreen from './SettingsScreen.js';
 //import PageScreen from "./PageScreen";
 export const RootStack = createStackNavigator(
   {
@@ -23,7 +24,14 @@ export const RootStack = createStackNavigator(
         title: "Home",
         header: null //this will hide the header
       }
-    }
+    },
+    Settings: {
+      screen: SettingsScreen,
+      navigationOptions: {
+        title: "Settings",
+        header: null //this will hide the header
+      }
+    },
   },
   {
     initialRouteName: "Authen"

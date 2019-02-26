@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import {} from 'react-native';
 import { Button, Container, Header, Content, List, ListItem, Separator,  Text, Title, Icon, Left, Body, Right, Switch } from 'native-base';
+import { StackActions, NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
-
-import { redirectAfterSignOut } from './FooterTabsExample.js';
 
 export default class SettingsScreen extends React.Component {    
   logout = () => {
     firebase.auth().signOut().then(function() {
       // Sign-out successful.
       alert("Sigout successully"); 
-      redirectAfterSignOut();
+      const loginAction = StackActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'Authen' }),
+        ],
+      });
+      this.props.navigation.dispatch(loginAction);
     }).catch(function(error) {
       // An error happened.
     });
@@ -63,7 +68,7 @@ export default class SettingsScreen extends React.Component {
               </Button>
             </Left>
             <Body>
-              <Text>Sign out</Text>
+              <Text onPress={this.logout}>Sign out</Text>
             </Body>
           </ListItem>
           <Separator bordered>

@@ -76,28 +76,29 @@ const styles = StyleSheet.create({
 
   textHorizontal: {
     marginRight: 15,
-    marginTop: 10
+    marginTop: 10,
+    fontWeight: "bold"
   }
 });
 
 //Cards in DeckSwiper, Homescreen
 const cards = [
   {
-    text: "Glutinous Rice",
+    text: "Soup",
     name: "One",
-    image: require("./img/1.jpg")
+    image: {uri:"https://images.pexels.com/photos/1703272/pexels-photo-1703272.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"}
   },
 
   {
-    text: "Noodle",
+    text: "Cocktail",
     name: "One",
-    image: require("./img/2.jpg")
+    image: {uri:"https://images.pexels.com/photos/613037/pexels-photo-613037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"}
   },
 
   {
-    text: "Vietnamese Sandwiches",
+    text: "Salad",
     name: "One",
-    image: require("./img/3.jpg")
+    image: {uri:"https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"}
   }
 ];
 
@@ -182,7 +183,13 @@ class HomeScreens extends React.Component {
                 itemid: this.state.key[i],
                 image: this.state.image[i],
                 name: this.state.name[i],
-                overall: this.state.overall[i]
+                ingredients: this.state.ingredients[i],
+                overall: this.state.overall[i],
+                step1:  this.state.step1[i],
+                step2:  this.state.step2[i],
+                step3:  this.state.step3[i],
+                step4:  this.state.step4[i],
+                step5:  this.state.step5[i],
               });
             }}
           >
@@ -235,7 +242,7 @@ class HomeScreens extends React.Component {
         </Header>
 
         {/* min height make content appear */}
-        <Content contentContainerStyle={{ minHeight: 1300, flex: 1 }}>
+        <Content contentContainerStyle={{ minHeight: 1100, flex: 1 }}>
           <Image
             source={require("./img/cover.png")}
             style={styles.coverPhoto}
@@ -287,17 +294,42 @@ class HomeScreens extends React.Component {
           </View>
 
           <View style={styles.deckSwiper}>
-            <View style={{ flex: 0.8 }}>
-              <BaseText style={[styles.deckSwiperTitle, styles.boldText]}>
-                Popular recipes
-              </BaseText>
-              <View>
-                <ScrollView horizontal={true}>
-                  {this.displayDataNew(this.state.items.length)}
-                </ScrollView>
+              <View style={{flex: 0.8}}>
+              <BaseText style={[styles.deckSwiperTitle, styles.boldText]}>Popular recipes</BaseText>
+              <ScrollView horizontal={true} >
+                <View style={{ flexDirection: 'column' }}>
+                  <Image style={styles.imageHorizontal} source={{uri:"https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe/recipe-image/2019/02/salmon.jpg?itok=kUgBx1tO"}} />
+                  
+                  <BaseText style={styles.textHorizontal}>Pan-fried salmon</BaseText>
+                </View>
+
+                 <View style={ styles.columnFlex }>
+                  <Image style={styles.imageHorizontal} source={{uri:"https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe/recipe-image/2019/02/espresso-martini-pancakes.jpg?itok=tfRoSZJ8"}} >
+                  </Image>
+                  <BaseText style={styles.textHorizontal}>Espresso martini </BaseText>
+                </View>
+
+                 <View style={ styles.columnFlex }>
+                  <Image style={styles.imageHorizontal} source={{uri:"https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe/recipe-image/2019/02/eggs-benedict-pancakes.jpg?itok=tV3SImbu"}} >
+                  </Image>
+                  <BaseText style={styles.textHorizontal}>Eggs Benedict</BaseText>
+                </View>
+
+                 <View style={ styles.columnFlex }>
+                  <Image style={styles.imageHorizontal} source={{uri:"https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe/recipe-image/2018/01/truffle_chicken_gratin.jpg?itok=r_cPwdYm"}} >
+                  </Image>
+                  <BaseText style={styles.textHorizontal}>Truffle chicken </BaseText>
+                </View>
+
+                 <View style={ styles.columnFlex }>
+                  <Image style={styles.imageHorizontal} source={{uri:"https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe/recipe-image/2018/09/next-level-banoffee-pie-.jpg?itok=kr-ezx3I"}} >
+                  </Image>
+                  <BaseText style={styles.textHorizontal}>Banoffee pie</BaseText>
+                </View>
+
+               </ScrollView>
               </View>
             </View>
-          </View>
         </Content>
       </Container>
     );
@@ -320,11 +352,17 @@ class PageScreen extends React.Component {
     const itemid = navigation.getParam("itemid", "1");
     const name = navigation.getParam("name", "Beef Noodle Soup");
     const image = navigation.getParam(
-      "iamge",
+      "image",
       "https://images.pexels.com/photos/1731535/pexels-photo-1731535.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
     );
+    const ingredients = navigation.getParam("ingredients")
     const overall = navigation.getParam("overall");
     const step1 = navigation.getParam("step1");
+    const step2 = navigation.getParam("step2");
+    const step3 = navigation.getParam("step3");
+    const step4 = navigation.getParam("step4");
+    const step5 = navigation.getParam("step5");
+
     const styless = StyleSheet.create({
       textBig: {
         marginTop: 30,
@@ -410,10 +448,7 @@ class PageScreen extends React.Component {
           />
           <Text style={styless.textTitle}>Ingredients: </Text>
           <Text style={styless.textSmall}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+             {JSON.stringify(ingredients)}
           </Text>
           <View
             style={{
@@ -428,26 +463,11 @@ class PageScreen extends React.Component {
           <Text style={styless.textBig}>Step 1: </Text>
           <Text style={styless.textSmall}>{JSON.stringify(step1)}</Text>
           <Text style={styless.textBig}>Step 2: </Text>
-          <Text style={styless.textSmall}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </Text>
+          <Text style={styless.textSmall}>{JSON.stringify(step2)}</Text>
           <Text style={styless.textBig}>Step 3: </Text>
-          <Text style={styless.textSmall}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </Text>
+          <Text style={styless.textSmall}>{JSON.stringify(step3)}</Text>
           <Text style={styless.textBig}>Step 4: </Text>
-          <Text style={styless.textSmall}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </Text>
+          <Text style={styless.textSmall}>{JSON.stringify(step4)}</Text>
           <View />
         </ScrollView>
       </Container>
@@ -466,8 +486,14 @@ const RootStack = createStackNavigator(
     Page: {
       screen: PageScreen,
       navigationOptions: {
-        title: "Details"
-      }
+        title: "Details",
+        headerStyle: {
+          backgroundColor: '#3B8686',
+          height: 60,
+          marginTop: -20
+        },
+        headerTintColor: '#fff',
+      },
     }
   },
   {

@@ -84,26 +84,6 @@ export default class Authen extends React.Component {
       this.props.navigation.dispatch(loginAction);               
     }
   }
-  
-  secretLogin = () => {
-      const loginAction = StackActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'Footer' }),
-        ],
-      });
-      this.props.navigation.dispatch(loginAction);                
-  }
-
-  secretBackLogin = () => {
-    const loginAction = StackActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Authen' }),
-      ],
-    });
-    this.props.navigation.dispatch(loginAction);                
-}
 
   render() {
     return (
@@ -146,12 +126,7 @@ export default class Authen extends React.Component {
                         }}>
                           <Text style={styles.loginButton}>Sign In via Facebook</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.facebookButton}
-                        onPress={() => {
-                          this.secretLogin()
-                        }}>
-                          <Text style={styles.loginButton}>Bypass Login</Text>
-                        </TouchableOpacity>
+                        
                       </View>
                 </Form>
               </View>
