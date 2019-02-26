@@ -79,7 +79,15 @@ const styles = StyleSheet.create({
     marginTop: 10
   }
 });
-
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreens,
+    Page: PageScreen
+  },
+  {
+    initialRouteName: "Home"
+  }
+);
 //Cards in DeckSwiper, Homescreen
 const cards = [
   {
