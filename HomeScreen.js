@@ -268,26 +268,40 @@ class HomeScreens extends React.Component {
 }
 
 class PageScreen extends React.Component {
-  constructor(props) {
-    super();
-
-    this.state = {
-      myText: "Save Recipe"
-    };
-  }
-  updateText = () => {
-    this.setState({ myText: "Recipe Saved" });
+  state = {
+    toggle: true
   };
-
+  switch() {
+    const newState = !this.state.toggle;
+    this.setState({ toggle: newState });
+  }
   render() {
-    const { navigation } = this.props;
-    const itemid = navigation.getParam("itemid");
+    const { toggle } = this.state;
+    const textValue = toggle ? "Save Recipe" : "Recipe Saved";
+    const colorbg = toggle ? "#cf3c3e" : "#000000";
     return (
       <Container>
         <ScrollView>
           {/* hide status bar */}
           <StatusBar hidden />
-
+          <Header
+            style={{
+              backgroundColor: "#3B8686",
+              flexDirection: "column",
+              height: 50
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 24,
+                fontWeight: "bold",
+                position: "relative",
+                color: "white"
+              }}
+            >
+              Recipe App
+            </Text>
+          </Header>
           <Image
             source={require("./img/1.jpg")}
             style={{ width: 360, height: 250 }}
@@ -298,32 +312,43 @@ class PageScreen extends React.Component {
                 fontSize: 25,
                 fontWeight: "bold",
                 marginTop: 25,
-                marginLeft: 15
+                marginLeft: 15,
+                color: "black"
               }}
             >
-              itemId: {JSON.stringify(itemid)}
+              Beef Noodle Soup
             </Text>
           </View>
+          <Image
+            source={require("./img/star.png")}
+            style={{ width: 140, height: 32, marginLeft: 15, marginTop: 25 }}
+          />
+
           <TouchableHighlight
             style={{
-              backgroundColor: "#DDDDDD",
+              backgroundColor: colorbg,
               width: 150,
               height: 40,
-              marginTop: 10,
+              marginTop: 30,
               marginLeft: 15,
               alignItems: "center",
               padding: 10,
               borderRadius: 20
             }}
+            onPress={() => this.switch()}
           >
-            <Text
-              style={{ fontWeight: "bold", fontSize: 16 }}
-              onPress={this.updateText}
-            >
-              {this.state.myText}
+            <Text style={{ fontWeight: "bold", fontSize: 16, color: "white" }}>
+              {textValue}
             </Text>
           </TouchableHighlight>
-          <Text style={{ marginTop: 30, marginLeft: 15, fontSize: 14 }}>
+          <Text
+            style={{
+              marginTop: 30,
+              marginLeft: 15,
+              fontSize: 18,
+              color: "black"
+            }}
+          >
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
@@ -342,13 +367,21 @@ class PageScreen extends React.Component {
             style={{
               marginTop: 30,
               marginLeft: 15,
-              fontSize: 18,
-              fontWeight: "bold"
+              fontSize: 22,
+              fontWeight: "bold",
+              color: "black"
             }}
           >
             Ingredients:{" "}
           </Text>
-          <Text style={{ marginTop: 30, marginLeft: 15, fontSize: 14 }}>
+          <Text
+            style={{
+              marginTop: 30,
+              marginLeft: 15,
+              fontSize: 18,
+              color: "black"
+            }}
+          >
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
@@ -367,43 +400,100 @@ class PageScreen extends React.Component {
             style={{
               marginTop: 30,
               marginLeft: 15,
-              fontSize: 18,
-              fontWeight: "bold"
+              fontSize: 22,
+              fontWeight: "bold",
+              color: "black"
             }}
           >
             Method:{" "}
           </Text>
-          <Text style={{ fontSize: 18, marginLeft: 15, marginTop: 10 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              marginLeft: 15,
+              marginTop: 10,
+              color: "black"
+            }}
+          >
             Step 1:{" "}
           </Text>
-          <Text style={{ marginTop: 30, marginLeft: 15, fontSize: 14 }}>
+          <Text
+            style={{
+              marginTop: 30,
+              marginLeft: 15,
+              fontSize: 18,
+              color: "black"
+            }}
+          >
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
             and scrambled it to make a type specimen book.
           </Text>
-          <Text style={{ fontSize: 18, marginLeft: 15, marginTop: 10 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              marginLeft: 15,
+              marginTop: 10,
+              color: "black"
+            }}
+          >
             Step 2:{" "}
           </Text>
-          <Text style={{ marginTop: 30, marginLeft: 15, fontSize: 14 }}>
+          <Text
+            style={{
+              marginTop: 30,
+              marginLeft: 15,
+              fontSize: 18,
+              color: "black"
+            }}
+          >
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
             and scrambled it to make a type specimen book.
           </Text>
-          <Text style={{ fontSize: 18, marginLeft: 15, marginTop: 10 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              marginLeft: 15,
+              marginTop: 10,
+              color: "black"
+            }}
+          >
             Step 3:{" "}
           </Text>
-          <Text style={{ marginTop: 30, marginLeft: 15, fontSize: 14 }}>
+          <Text
+            style={{
+              marginTop: 30,
+              marginLeft: 15,
+              fontSize: 18,
+              color: "black"
+            }}
+          >
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
             and scrambled it to make a type specimen book.
           </Text>
-          <Text style={{ fontSize: 18, marginLeft: 15, marginTop: 10 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              marginLeft: 15,
+              marginTop: 10,
+              color: "black"
+            }}
+          >
             Step 4:{" "}
           </Text>
-          <Text style={{ marginTop: 30, marginLeft: 15, fontSize: 14 }}>
+          <Text
+            style={{
+              marginTop: 30,
+              marginLeft: 15,
+              fontSize: 18,
+              color: "black"
+            }}
+          >
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
@@ -427,9 +517,9 @@ const RootStack = createStackNavigator(
     Page: {
       screen: PageScreen,
       navigationOptions: {
-        title: "Details",
+        title: "Details"
       }
-    },
+    }
   },
   {
     initialRouteName: "Home"
@@ -449,4 +539,3 @@ export default class Homescreen extends React.Component {
     return <AppContainer />;
   }
 }
-
