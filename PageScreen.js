@@ -34,54 +34,23 @@ import {
   Spinner,
   Toast
 } from "native-base";
-import firebase from "./initFirebase.js";
-var firebaseDbh = firebase.database();
-const WORow = ({ name, ingrs, img }) => (
-  <View style={{ flexDirection: "row" }}>
-    <Text
-      style={{
-        fontSize: 26,
-        fontWeight: "bold",
-        marginLeft: 15,
-        marginTop: 20
-      }}
-    >
-      {name}
-    </Text>
-  </View>
-);
+import { db } from "./initFirebase.js";
+let itemsRef = db.ref("/recipes");
 export default class PageScreen extends React.Component {
   static navigationOptions = {
     title: "Page"
   };
   constructor(props) {
-    super(props);
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
-    this.state = { loading: true, dbh: firebaseDbh, dataSource: ds };
+    super();
+
+    this.state = {
+      myText: "Save Recipe"
+    };
   }
-  componentDidMount() {
-    var dbref = this.state.dbh.ref("recipes");
-    this.setState({ dbulref: dbref });
-    dbref.on("value", e => {
-      var rows = [];
-      if (e && e.val() && e.val().map) {
-        e.val().map(v => rows.push(v));
-      }
-      var ds = this.state.dataSource.cloneWithRows(rows);
-      this.setState({
-        dataSource: ds,
-        loading: false
-      });
-    });
-  }
-  componentDidUnMount() {
-    this.state.dbulref.off("value");
-  }
-  renderRow(rd) {
-    return <WORow name={rd.name} ingrs={rd.ingredients} img={rd.image} />;
-  }
+  updateText = () => {
+    this.setState({ myText: "Recipe Saved" });
+  };
+
   render() {
     return (
       <Container>
@@ -115,10 +84,16 @@ export default class PageScreen extends React.Component {
             style={{ width: 360, height: 250 }}
           />
           <View>
-            <ListView
-              dataSource={this.state.dataSource}
-              renderRow={rowData => this.renderRow(rowData)}
-            />
+            <Text
+              style={{
+                fontSize: 25,
+                fontWeight: "bold",
+                marginTop: 25,
+                marginLeft: 15
+              }}
+            >
+              Beef Noodle Soup
+            </Text>
           </View>
           <TouchableHighlight
             style={{
@@ -132,8 +107,11 @@ export default class PageScreen extends React.Component {
               borderRadius: 20
             }}
           >
-            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-              Save Recipe
+            <Text
+              style={{ fontWeight: "bold", fontSize: 16 }}
+              onPress={this.updateText}
+            >
+              {this.state.myText}
             </Text>
           </TouchableHighlight>
           <Text style={{ marginTop: 30, marginLeft: 15, fontSize: 14 }}>
