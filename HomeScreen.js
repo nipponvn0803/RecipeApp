@@ -279,6 +279,8 @@ class PageScreen extends React.Component {
     const { toggle } = this.state;
     const textValue = toggle ? "Save Recipe" : "Recipe Saved";
     const colorbg = toggle ? "#cf3c3e" : "#000000";
+    const { navigation } = this.props;
+    const itemid = navigation.getParam("itemid");
     return (
       <Container>
         <ScrollView>
@@ -316,7 +318,7 @@ class PageScreen extends React.Component {
                 color: "black"
               }}
             >
-              Beef Noodle Soup
+              itemId: {JSON.stringify(itemid)}
             </Text>
           </View>
           <Image
