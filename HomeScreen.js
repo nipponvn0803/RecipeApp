@@ -325,7 +325,27 @@ class PageScreen extends React.Component {
     );
     const overall = navigation.getParam("overall");
     const step1 = navigation.getParam("step1");
-
+    const styless = StyleSheet.create({
+      textBig: {
+        marginTop: 30,
+        marginLeft: 15,
+        fontSize: 18,
+        color: "black"
+      },
+      textSmall: {
+        fontSize: 20,
+        marginLeft: 15,
+        marginTop: 10,
+        color: "black"
+      },
+      textTitle: {
+        marginTop: 30,
+        marginLeft: 15,
+        fontSize: 22,
+        fontWeight: "bold",
+        color: "black"
+      }
+    });
     return (
       <Container>
         <ScrollView>
@@ -387,8 +407,8 @@ class PageScreen extends React.Component {
               paddingRight: 20
             }}
           />
-          <Text style={styles.textTitle}>Ingredients: </Text>
-          <Text style={styles.textSmall}>
+          <Text style={styless.textTitle}>Ingredients: </Text>
+          <Text style={styless.textSmall}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
@@ -403,25 +423,25 @@ class PageScreen extends React.Component {
               paddingRight: 20
             }}
           />
-          <Text style={styles.textTitle}>Method: </Text>
-          <Text style={styles.textBig}>Step 1: </Text>
-          <Text style={styles.textSmall}>{JSON.stringify(step1)}</Text>
-          <Text style={styles.textBig}>Step 2: </Text>
-          <Text style={styles.textSmall}>
+          <Text style={styless.textTitle}>Method: </Text>
+          <Text style={styless.textBig}>Step 1: </Text>
+          <Text style={styless.textSmall}>{JSON.stringify(step1)}</Text>
+          <Text style={styless.textBig}>Step 2: </Text>
+          <Text style={styless.textSmall}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
             and scrambled it to make a type specimen book.
           </Text>
-          <Text style={styles.textBig}>Step 3: </Text>
-          <Text style={styles.textSmall}>
+          <Text style={styless.textBig}>Step 3: </Text>
+          <Text style={styless.textSmall}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
             and scrambled it to make a type specimen book.
           </Text>
-          <Text style={styles.textBig}>Step 4: </Text>
-          <Text style={styles.textSmall}>
+          <Text style={styless.textBig}>Step 4: </Text>
+          <Text style={styless.textSmall}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
