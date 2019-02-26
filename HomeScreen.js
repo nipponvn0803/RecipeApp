@@ -100,8 +100,23 @@ const cards = [
     image: require("./img/3.jpg")
   }
 ];
-let id = [];
+
 let itemsRef = db.ref("/recipes");
+
+const stylesHome = StyleSheet.create({
+  textBig: {
+    marginTop: 30,
+    marginLeft: 15,
+    fontSize: 18,
+    color: "black"
+  },
+  textSmall: {
+    fontSize: 20,
+    marginLeft: 15,
+    marginTop: 10,
+    color: "black"
+  }
+})
 
 class HomeScreens extends React.Component {
   constructor(props) {
@@ -113,7 +128,13 @@ class HomeScreens extends React.Component {
       image: [],
       ingredients: [],
       name: [],
-      key: []
+      key: [],
+      overall: [],
+      step1: [],
+      step2: [],
+      step3: [],
+      step4: [],
+      step5: [],
     };
   }
 
@@ -129,7 +150,13 @@ class HomeScreens extends React.Component {
             this.state.items[i].ingredients
           ),
           name: this.state.name.concat(this.state.items[i].name),
-          key: this.state.key.concat(this.state.items[i].id)
+          key: this.state.key.concat(this.state.items[i].id),
+          overall: this.state.overall.concat(this.state.items[i].Overall),
+          step1: this.state.step1.concat(this.state.items[i].Step1),
+          step2: this.state.step2.concat(this.state.items[i].Step2),
+          step3: this.state.step3.concat(this.state.items[i].Step3),
+          step4: this.state.step4.concat(this.state.items[i].Step4),
+          step5: this.state.step5.concat(this.state.items[i].Step5),
         });
       }
     });
@@ -145,7 +172,10 @@ class HomeScreens extends React.Component {
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate("Page", {
-                itemid: this.state.key[i]
+                itemid: this.state.key[i],
+                image: this.state.image[i],
+                name: this.state.name[i],
+                overall: this.state.overall[i],
               });
             }}
           >
@@ -280,32 +310,20 @@ class PageScreen extends React.Component {
     const textValue = toggle ? "Save Recipe" : "Recipe Saved";
     const colorbg = toggle ? "#cf3c3e" : "#000000";
     const { navigation } = this.props;
-    const itemid = navigation.getParam("itemid");
+    const itemid = navigation.getParam("itemid", "1");
+    const name = navigation.getParam("name", "Beef Noodle Soup");
+    const image = navigation.getParam("iamge", "https://images.pexels.com/photos/1731535/pexels-photo-1731535.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    const overall = navigation.getParam("overall");
+    const step1 = navigation.getParam("step1");
+
     return (
       <Container>
         <ScrollView>
           {/* hide status bar */}
           <StatusBar hidden />
-          <Header
-            style={{
-              backgroundColor: "#3B8686",
-              flexDirection: "column",
-              height: 50
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 24,
-                fontWeight: "bold",
-                position: "relative",
-                color: "white"
-              }}
-            >
-              Recipe App
-            </Text>
-          </Header>
+        
           <Image
-            source={require("./img/1.jpg")}
+            source={{uri:image}}
             style={{ width: 360, height: 250 }}
           />
           <View>
@@ -318,7 +336,7 @@ class PageScreen extends React.Component {
                 color: "black"
               }}
             >
-              itemId: {JSON.stringify(itemid)}
+              {name}
             </Text>
           </View>
           <Image
@@ -351,10 +369,7 @@ class PageScreen extends React.Component {
               color: "black"
             }}
           >
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+            {JSON.stringify(overall)}
           </Text>
           <View
             style={{
@@ -427,10 +442,7 @@ class PageScreen extends React.Component {
               color: "black"
             }}
           >
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+            {JSON.stringify(step1)}
           </Text>
           <Text
             style={{
