@@ -115,8 +115,15 @@ const stylesHome = StyleSheet.create({
     marginLeft: 15,
     marginTop: 10,
     color: "black"
+  },
+  textTitle: {
+    marginTop: 30,
+    marginLeft: 15,
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "black"
   }
-})
+});
 
 class HomeScreens extends React.Component {
   constructor(props) {
@@ -134,7 +141,7 @@ class HomeScreens extends React.Component {
       step2: [],
       step3: [],
       step4: [],
-      step5: [],
+      step5: []
     };
   }
 
@@ -156,7 +163,7 @@ class HomeScreens extends React.Component {
           step2: this.state.step2.concat(this.state.items[i].Step2),
           step3: this.state.step3.concat(this.state.items[i].Step3),
           step4: this.state.step4.concat(this.state.items[i].Step4),
-          step5: this.state.step5.concat(this.state.items[i].Step5),
+          step5: this.state.step5.concat(this.state.items[i].Step5)
         });
       }
     });
@@ -175,7 +182,7 @@ class HomeScreens extends React.Component {
                 itemid: this.state.key[i],
                 image: this.state.image[i],
                 name: this.state.name[i],
-                overall: this.state.overall[i],
+                overall: this.state.overall[i]
               });
             }}
           >
@@ -312,7 +319,10 @@ class PageScreen extends React.Component {
     const { navigation } = this.props;
     const itemid = navigation.getParam("itemid", "1");
     const name = navigation.getParam("name", "Beef Noodle Soup");
-    const image = navigation.getParam("iamge", "https://images.pexels.com/photos/1731535/pexels-photo-1731535.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    const image = navigation.getParam(
+      "iamge",
+      "https://images.pexels.com/photos/1731535/pexels-photo-1731535.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+    );
     const overall = navigation.getParam("overall");
     const step1 = navigation.getParam("step1");
 
@@ -321,11 +331,8 @@ class PageScreen extends React.Component {
         <ScrollView>
           {/* hide status bar */}
           <StatusBar hidden />
-        
-          <Image
-            source={{uri:image}}
-            style={{ width: 360, height: 250 }}
-          />
+
+          <Image source={{ uri: image }} style={{ width: 360, height: 250 }} />
           <View>
             <Text
               style={{
@@ -380,25 +387,8 @@ class PageScreen extends React.Component {
               paddingRight: 20
             }}
           />
-          <Text
-            style={{
-              marginTop: 30,
-              marginLeft: 15,
-              fontSize: 22,
-              fontWeight: "bold",
-              color: "black"
-            }}
-          >
-            Ingredients:{" "}
-          </Text>
-          <Text
-            style={{
-              marginTop: 30,
-              marginLeft: 15,
-              fontSize: 18,
-              color: "black"
-            }}
-          >
+          <Text style={styles.textTitle}>Ingredients: </Text>
+          <Text style={styles.textSmall}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
@@ -413,101 +403,25 @@ class PageScreen extends React.Component {
               paddingRight: 20
             }}
           />
-          <Text
-            style={{
-              marginTop: 30,
-              marginLeft: 15,
-              fontSize: 22,
-              fontWeight: "bold",
-              color: "black"
-            }}
-          >
-            Method:{" "}
-          </Text>
-          <Text
-            style={{
-              fontSize: 20,
-              marginLeft: 15,
-              marginTop: 10,
-              color: "black"
-            }}
-          >
-            Step 1:{" "}
-          </Text>
-          <Text
-            style={{
-              marginTop: 30,
-              marginLeft: 15,
-              fontSize: 18,
-              color: "black"
-            }}
-          >
-            {JSON.stringify(step1)}
-          </Text>
-          <Text
-            style={{
-              fontSize: 20,
-              marginLeft: 15,
-              marginTop: 10,
-              color: "black"
-            }}
-          >
-            Step 2:{" "}
-          </Text>
-          <Text
-            style={{
-              marginTop: 30,
-              marginLeft: 15,
-              fontSize: 18,
-              color: "black"
-            }}
-          >
+          <Text style={styles.textTitle}>Method: </Text>
+          <Text style={styles.textBig}>Step 1: </Text>
+          <Text style={styles.textSmall}>{JSON.stringify(step1)}</Text>
+          <Text style={styles.textBig}>Step 2: </Text>
+          <Text style={styles.textSmall}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
             and scrambled it to make a type specimen book.
           </Text>
-          <Text
-            style={{
-              fontSize: 20,
-              marginLeft: 15,
-              marginTop: 10,
-              color: "black"
-            }}
-          >
-            Step 3:{" "}
-          </Text>
-          <Text
-            style={{
-              marginTop: 30,
-              marginLeft: 15,
-              fontSize: 18,
-              color: "black"
-            }}
-          >
+          <Text style={styles.textBig}>Step 3: </Text>
+          <Text style={styles.textSmall}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
             and scrambled it to make a type specimen book.
           </Text>
-          <Text
-            style={{
-              fontSize: 20,
-              marginLeft: 15,
-              marginTop: 10,
-              color: "black"
-            }}
-          >
-            Step 4:{" "}
-          </Text>
-          <Text
-            style={{
-              marginTop: 30,
-              marginLeft: 15,
-              fontSize: 18,
-              color: "black"
-            }}
-          >
+          <Text style={styles.textBig}>Step 4: </Text>
+          <Text style={styles.textSmall}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
